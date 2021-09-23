@@ -1,5 +1,7 @@
 package com.devsuperior.dsclients.services;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devsuperior.dsclients.dto.ClientDTO;
 import com.devsuperior.dsclients.entities.Client;
 import com.devsuperior.dsclients.repositories.ClientRepository;
+import com.devsuperior.dsclients.services.exceptions.ResourceNotFoundException;
 
 
 @Service
@@ -23,9 +26,11 @@ public class ClientService {
 		return list.map(x -> new ClientDTO(x));
 	}
 
+	@Transactional(readOnly = true)
 	public ClientDTO findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<Client> obj = repository.findById(id);
+		Client entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entity not found"));
+		return new ClientDTO(entity);
 	}
 
 	public ClientDTO insert(ClientDTO dto) {

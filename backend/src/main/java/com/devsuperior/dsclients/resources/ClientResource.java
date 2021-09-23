@@ -55,8 +55,8 @@ public class ClientResource {
 		return ResponseEntity.created(uri).body(dto);
 	}
 	
-	/*
-	 * @PutMapping(value = "/{id}") public ResponseEntity<ClientDTO> update
-	 */
+	
+	  //@PutMapping(value = "/{id}") public ResponseEntity<ClientDTO> update()
+	 
 	
 }
